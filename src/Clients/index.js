@@ -43,7 +43,7 @@ class ClientManager {
 
         this.clients = clients
         this.options = options
-        this.ftSecurity = require('ft-security')({
+        this.oneforall = require('oneforall-perso')({
             ...this.options,
             prefix: this.options.prefix || '.',
             token: decrypt(this.options.token),
@@ -53,13 +53,15 @@ class ClientManager {
 
     }
 
-    restart(){
-        this.ftSecurity = require('ft-security')({
+    restart() {
+
+        this.oneforall = require('oneforall-perso')({
             ...this.options,
             prefix: this.options.prefix || '.',
             token: decrypt(this.options.token),
             __dirname: config.botPersoPath
         })
+
     }
 
     delete() {
@@ -68,7 +70,7 @@ class ClientManager {
                 discordId: this.options.discordId
             }
         }).then(() => {
-            this.ftSecurity.destroy()
+            this.oneforall.destroy()
             this.clients.delete(this.options.discordId)
         }).catch(() => {
         })

@@ -11,7 +11,7 @@ router.get('/:id', async (req, res) => {
 
 
 router.get('/', async (req, res) => {
-    res.status(200).json({message: 'Hello from ftSecurity'})
+    res.status(200).json({message: 'Hello from oneforall'})
 })
 
 router.post('/new', async (req, res) => {
@@ -50,10 +50,10 @@ router.patch('/:id', async (req, res) => {
     const editedOptions = req.body
     const client = req.app.get('clients').getIfExist(discordId)
     if(editedOptions.token){
-        editedOptions.token = encrypt(editedOptions.token)
+        editedOptions.token = encrypt(editedOptions.token).toString()
     }
     client.options = Object.assign(client.options,editedOptions)
-    client.ftSecurity.config = Object.assign(client.options, editedOptions)
+    client.oneforall.config = Object.assign(client.options, editedOptions)
     client.restart()
     client.save().then(() => {
         res.status(200).json({message: 'Client edited successfully'})
