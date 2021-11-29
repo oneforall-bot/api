@@ -1,7 +1,7 @@
 {
-  "name": "ft-security-api",
-  "version": "1.0.0",
-  "description": "Api of ftsecuirty",
+  "name": "oneforall-api",
+  "version": "2.0.0",
+  "description": "Api of oneforall",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
