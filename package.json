@@ -1,0 +1,22 @@
+{
+  "name": "ft-security-api",
+  "version": "1.0.0",
+  "description": "Api of ftsecuirty",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "author": "takefy",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "cryptojs": "^2.5.3",
+    "express": "^4.17.1",
+    "mysql2": "^2.3.3",
+    "node-cron": "^3.0.0",
+    "sequelize": "^6.9.0",
+    "shelljs": "^0.8.4"
+  }
+}
