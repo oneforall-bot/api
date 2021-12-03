@@ -26,6 +26,8 @@ router.post('/new', async (req, res) => {
         prefix: `.`,
         maxGuilds,
         guildIds,
+        expiredAt,
+        createdAt,
         owners,
         client: discordId,
         __dirname: req.app.get('config').botPersoPath
