@@ -4,11 +4,14 @@ module.exports =  (database) => {
     const DataTypes = database.DataTypes
     try {
         database.define(modelName, {
+            id: {
+              type: DataTypes.INTEGER,
+              autoIncrement: true,
+              primaryKey: true
+            },
             discordId: {
                 type: DataTypes.STRING(25),
                 allowNull: false,
-                primaryKey: true
-
             },
             licenseKey: {
                 type: DataTypes.TEXT,

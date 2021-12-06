@@ -15,7 +15,8 @@ class Clients extends Collection {
 
     async loadClients() {
         for await (const client of (await this.database.models.clients.findAll())) {
-            this.add(client.get('discordId'), client.get())
+            console.log(client)
+            this.add(`${client.get('discordId')}-${client.get('botId')}`, client.get())
             await sleep(1000)
         }
     }
@@ -37,10 +38,9 @@ class Clients extends Collection {
 
 class ClientManager {
     constructor(clients, options, key) {
-        options.client = key || options.discordId
+        options.client = key.split('-')[0] || options.discordId
         for (const property in options) this[property] = options[property]
         this.key = key
-
         this.clients = clients
         this.options = options
         this.oneforall = require('oneforall-perso')({
@@ -67,11 +67,12 @@ class ClientManager {
     delete() {
         this.clients.database.models.clients.destroy({
             where: {
-                discordId: this.options.discordId
+                discordId: this.options.discordId,
+                botId: this.options.botId
             }
         }).then(() => {
             this.oneforall.destroy()
-            this.clients.delete(this.options.discordId)
+            this.clients.delete(`${this.options.discordId}-${this.options.botId}`)
         }).catch(() => {
         })
         return this;
@@ -83,7 +84,7 @@ class ClientManager {
 
     async save() {
         for (const property in this.options) this[property] = this.options[property]
-        this.clients.database.updateOrCreate(this.clients.database.models.clients, {discordId: this.key}, this.options).then(() => {
+        this.clients.database.updateOrCreate(this.clients.database.models.clients, {discordId: this.key.split('-')[0]}, this.options).then(() => {
         }).catch((e) => console.error(e));
         return this;
     }
