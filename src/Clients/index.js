@@ -15,7 +15,7 @@ class Clients extends Collection {
 
     async loadClients() {
         for await (const client of (await this.database.models.clients.findAll())) {
-            console.log(client)
+            console.log(client.get())
             this.add(`${client.get('discordId')}-${client.get('botId')}`, client.get())
             await sleep(1000)
         }
@@ -84,7 +84,7 @@ class ClientManager {
 
     async save() {
         for (const property in this.options) this[property] = this.options[property]
-        this.clients.database.updateOrCreate(this.clients.database.models.clients, {discordId: this.key.split('-')[0]}, this.options).then(() => {
+        this.clients.database.updateOrCreate(this.clients.database.models.clients, {discordId: this.key.split('-')[0], botId: this.key.split('-')[1] }, this.options).then(() => {
         }).catch((e) => console.error(e));
         return this;
     }

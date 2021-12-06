@@ -4,6 +4,7 @@ const {encrypt, decrypt} = require("../../utils/functions");
 router.get('/:id', async (req, res) => {
     const { id } = req.params
     const client = req.app.get('clients').filter(client => client.discordId === id)
+    console.log(req.app.get('clients'))
     if(!client) return res.status(404).json({message: 'Client not found'})
     const data = client.map((manager) => {
         return {
@@ -53,7 +54,7 @@ router.delete('/:discordId/:botId', async (req, res) => {
 
 
 router.patch('/:discordId/:botId', async (req, res) => {
-    const {discordId, botId} = req.params.id;
+    const {discordId, botId} = req.params;
     const editedOptions = req.body
     const client = req.app.get('clients').find(client => client.discordId === discordId && client.botId === botId)
     if(editedOptions.token){
