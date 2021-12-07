@@ -15,7 +15,6 @@ class Clients extends Collection {
 
     async loadClients() {
         for await (const client of (await this.database.models.clients.findAll())) {
-            console.log(client.get())
             this.add(`${client.get('discordId')}-${client.get('botId')}`, client.get())
             await sleep(1000)
         }
@@ -43,6 +42,7 @@ class ClientManager {
         this.key = key
         this.clients = clients
         this.options = options
+        this.deleteBotAt = new Date(this.options.expiredAt).setDate(new Date(this.options.expiredAt).getDate() +  2)
         this.oneforall = require('oneforall-perso')({
             ...this.options,
             prefix: this.options.prefix || '.',
@@ -54,7 +54,7 @@ class ClientManager {
     }
 
     restart() {
-
+        this.oneforall.destroy()
         this.oneforall = require('oneforall-perso')({
             ...this.options,
             prefix: this.options.prefix || '.',
@@ -79,7 +79,19 @@ class ClientManager {
     }
 
     get isExpired() {
-        return moment().isAfter(moment(this.options.expiredAt).add(2, "days"))
+        if(this.deleteBotAt <= Date.now()) {
+            this.oneforall.users.fetch(this.options.discordId).then((owner) => {
+                owner.send({content: "Votre bot est arriver à expiration n'oublier pas de renouveller sur https://discord.gg/ckYZguSdrK"}).catch(() => {})
+            })
+            return true
+        }
+        else if(this.options.expiredAt <= Date.now()){
+            this.oneforall.users.fetch(this.options.discordId).then((owner) => {
+                owner.send({content: "Votre bot est sur le point d'arriver à expiration n'oublier pas de renouveller sur https://discord.gg/ckYZguSdrK"}).catch(() => {})
+            })
+
+        }
+        return false
     }
 
     async save() {
