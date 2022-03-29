@@ -1,7 +1,7 @@
 module.exports = {
     database: {
         username: 'takefydev',
-        password: 'murphy7777',
+        password: 'x',
         name: 'oneforall_api'
     },
     port: 5006,
