@@ -47,7 +47,8 @@ class ClientManager {
             ...this.options,
             prefix: this.options.prefix || '.',
             token: decrypt(this.options.token),
-            __dirname: config.botPersoPath
+            __dirname: config.botPersoPath,
+            activity: this.options.activity || {activities: [{name: 'oneforall perso .gg/oneforall', type: 'WATCHING'}]}
         })
 
 
@@ -59,7 +60,8 @@ class ClientManager {
             ...this.options,
             prefix: this.options.prefix || '.',
             token: decrypt(this.options.token),
-            __dirname: config.botPersoPath
+            __dirname: config.botPersoPath,
+            activity: this.options.activity || {activities: [{name: 'oneforall perso .gg/oneforall', type: 'WATCHING'}]}
         })
 
     }

@@ -34,10 +34,6 @@ module.exports =  (database) => {
                 allowNull: false,
                 default: new Date()
             },
-            guildIds: {
-                type: DataTypes.JSON(),
-                allowNull: true,
-            },
             owners: {
                 type: DataTypes.JSON(),
                 allowNull: true,
@@ -46,13 +42,17 @@ module.exports =  (database) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 defaultValue: 5
+            },
+            activity: {
+                type: DataTypes.JSON,
+                allowNull: true,
             }
         }, {
             tableName: modelName,
             charset: 'utf8mb4',
             collate: 'utf8mb4_general_ci'
         })
-        database.models[modelName].sync()
+        database.models[modelName].sync({alter: true})
         return database.models[modelName]
     } catch (e) {
         console.log(e)
